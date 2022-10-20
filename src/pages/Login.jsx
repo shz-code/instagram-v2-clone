@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginImg from "../assets/images/iphone-with-profile.jpg";
 import InstagramLogo from "../assets/images/logo.png";
+import { useAuth } from "../contexts/AuthProvider";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const { login, user } = useAuth();
+  const navigater = useNavigate();
 
   const isInvalid = password === "" || email === "";
 
@@ -12,7 +19,24 @@ export default function Login() {
     document.title = "Instagram v2 - Login";
   }, []);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await login(email, password);
+      setLoading(false);
+      navigater("/");
+    } catch (err) {
+      setLoading(false);
+      if (err.code === "auth/invalid-email")
+        setError("Invalid email. Try again!");
+      else if (err.code === "auth/user-not-found")
+        setError("User not found. Try again!");
+      else if (err.code === "auth/wrong-password")
+        setError("Password do not match. Try again!");
+    }
+  };
+
   return (
     <div>
       <div className="container flex mx-auto max-w-screen-md items-center h-screen">
@@ -24,6 +48,11 @@ export default function Login() {
             <h1>
               <img src={InstagramLogo} alt="Logo" />
             </h1>
+            {error && (
+              <span className="text-sm bg-blue-50 w-full text-center py-1 rounded text-red-500">
+                {error}
+              </span>
+            )}
             <form onSubmit={handleSubmit} method="post" className="w-full mt-3">
               <input
                 type="email"
@@ -40,9 +69,10 @@ export default function Login() {
                 onChange={({ target }) => setPassword(target.value)}
               />
               <button
-                className={`text-white bg-blue-500 w-full py-2 rounded ${
+                className={`text-white bg-blue-500 hover:bg-blue-600 w-full py-2 rounded ${
                   isInvalid && `opacity-50`
                 }`}
+                disabled={loading && true}
               >
                 Login
               </button>
