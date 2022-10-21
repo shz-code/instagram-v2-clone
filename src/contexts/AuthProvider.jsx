@@ -1,8 +1,10 @@
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import "../lib/firebase";
@@ -27,6 +29,13 @@ export default function AuthProvider({ children }) {
     return authChange;
   }, []);
 
+  const signup = async (name, username, email, password) => {
+    const auth = getAuth();
+    await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(auth.currentUser, { displayName: username });
+    setUser({ ...auth.currentUser });
+  };
+
   const login = async (email, password) => {
     const auth = getAuth();
     return await signInWithEmailAndPassword(auth, email, password);
@@ -41,6 +50,7 @@ export default function AuthProvider({ children }) {
     login,
     user,
     logout,
+    signup,
   };
 
   return (
