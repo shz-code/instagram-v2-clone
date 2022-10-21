@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import { AUTHENTICATION, FEED } from "./Routes.js";
 
 const Authentication = lazy(() => import("./pages/Authentication"));
-const Feed = lazy(() => import("./pages/Feed"));
+const Layout = lazy(() => import("./pages/Layout"));
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <AuthProvider>
         <Suspense fallback={<p>Loading...</p>}>
           <Routes>
-            <Route path={FEED} element={<Feed />} />
+            <Route path={FEED} element={<Layout />} />
             <Route path={AUTHENTICATION} element={<Authentication />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
