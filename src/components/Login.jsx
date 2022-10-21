@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InstagramLogo from "../assets/images/logo.png";
 import { useAuth } from "../contexts/AuthProvider";
+import Loader from "./Loader";
 
 export default function Login({ setCurrentAuth }) {
   const [password, setPassword] = useState("");
@@ -40,7 +41,7 @@ export default function Login({ setCurrentAuth }) {
           <img src={InstagramLogo} alt="Logo" />
         </h1>
         {error && (
-          <span className="text-sm bg-blue-50 w-full text-center py-1 rounded text-red-primary mt-2">
+          <span className="text-sm font-bold bg-gray-background w-full text-center py-1 rounded text-red-primary mt-2">
             {error}
           </span>
         )}
@@ -52,25 +53,25 @@ export default function Login({ setCurrentAuth }) {
           <input
             type="email"
             placeholder="Enter Your Email"
-            className="p-2 w-full text-sm text-gray-base border border-gray-primary rounded"
+            className="py-1 px-2 bg-gray-background focus:outline-none w-full text-sm text-gray-base border border-gray-primary rounded"
             value={email}
             onChange={({ target }) => setEmail(target.value)}
           />
           <input
             type="password"
             placeholder="Enter Your Password"
-            className="p-2 w-full text-sm text-gray-base border border-gray-primary rounded"
+            className="py-1 px-2 bg-gray-background focus:outline-none w-full text-sm text-gray-base border border-gray-primary rounded"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
           <button
             className={`text-white bg-blue-medium
-                ${!isInvalid && `hover:bg-blue-primary`} w-full p-1 rounded ${
-              isInvalid && `opacity-50`
-            }`}
+                ${
+                  !isInvalid && !loading && `hover:bg-blue-primary`
+                } w-full p-1 rounded ${isInvalid && `opacity-50`}`}
             disabled={(loading || isInvalid) && true}
           >
-            Login
+            {loading ? <Loader /> : "Login"}
           </button>
         </form>
       </div>

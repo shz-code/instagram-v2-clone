@@ -6,6 +6,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import "../lib/firebase";
 
@@ -29,10 +30,28 @@ export default function AuthProvider({ children }) {
     return authChange;
   }, []);
 
+  const SetProfile = async (user, name, username, email) => {
+    const db = getFirestore();
+    try {
+      await addDoc(collection(db, "users"), {
+        userId: user.uid,
+        username: username,
+        fullName: name,
+        emailAddress: email,
+        following: [],
+        followers: [],
+        dateCreated: Date.now(),
+      });
+    } catch (err) {
+      console.log("There was an error creating user profile.");
+    }
+  };
+
   const signup = async (name, username, email, password) => {
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, { displayName: username });
+    SetProfile(auth.currentUser, name, username, email);
     setUser({ ...auth.currentUser });
   };
 
