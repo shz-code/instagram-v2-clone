@@ -44,7 +44,7 @@ export default function Post() {
             </div>
           </div>
           <div className="content__body__postDesc">
-            <p className="text-sm text-justify">
+            <p className="text-sm ">
               <span className="font-bold">web.inspirations</span>{" "}
               {show ? text : `${text.slice(0, 40)}...`}{" "}
               {!show && (
