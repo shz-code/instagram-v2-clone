@@ -47,7 +47,9 @@ export default function Post({ post }) {
               className="w-8 rounded-2xl"
               alt=""
             />
-            <span className="font-bold">web.inspiration</span>
+            <span className="font-bold">
+              {post?.username || "Not Provided"}
+            </span>
           </div>
         </div>
         <div className="content__photo">
@@ -66,7 +68,10 @@ export default function Post({ post }) {
           </div>
           <div className="content__body__postDesc">
             <p className="text-sm w-full break-words">
-              <span className="font-bold">web.inspirations</span>{" "}
+              <span className="font-bold">
+                {" "}
+                {post?.username || "Not Provided"}
+              </span>{" "}
               {showDesc ? `${caption}` : `${caption.slice(0, 40)}...`}{" "}
               {!showDesc && (
                 <span

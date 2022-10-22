@@ -9,7 +9,7 @@ export default function Posts() {
   return (
     <div className="grid gap-y-8">
       {loading ? (
-        <Skeleton count={1} height={550} />
+        <Skeleton count={5} height={550} />
       ) : (
         posts.map((post, index) => <Post post={post} key={index} />)
       )}
