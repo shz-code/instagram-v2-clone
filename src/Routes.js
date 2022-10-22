@@ -1,2 +1,2 @@
-export const FEED = "/";
-export const AUTHENTICATION = "/authentication";
+export const FEED = "";
+export const AUTHENTICATION = "authentication";
