@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthProvider";
 
 function CurrentUserCard({ userProfile, loading }) {
   const { user, logout } = useAuth();
-  const { username, fullName } = userProfile;
+  const { username, fullName, profilePhotoUrl } = userProfile;
   return (
     <>
       {loading ? (
@@ -13,11 +13,7 @@ function CurrentUserCard({ userProfile, loading }) {
         <div className="aside__header py-4 flex justify-between items-center">
           <div className="user__avater flex gap-x-2 items-center">
             <div className="user__profile">
-              <img
-                src="./images/avaters/dali.jpg"
-                className="w-12 rounded-full"
-                alt=""
-              />
+              <img src={profilePhotoUrl} className="w-12 rounded-full" alt="" />
             </div>
             <div className="user__name grid">
               <span className="font-bold">{username}</span>

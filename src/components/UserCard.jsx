@@ -6,7 +6,7 @@ import Loader from "./Loader";
 export default function UserCard({ profile, currentUser }) {
   const [followed, setFollowed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { username, fullName, userId, docId } = profile;
+  const { username, fullName, userId, docId, profilePhotoUrl } = profile;
 
   const handleFollowBtn = async () => {
     setLoading(true);
@@ -26,11 +26,7 @@ export default function UserCard({ profile, currentUser }) {
       <div className=" flex justify-between items-center py-4">
         <div className="user__avater flex gap-x-2 items-center">
           <div className="user__profile">
-            <img
-              src="./images/avaters/karl.jpg"
-              className="w-12 rounded-full"
-              alt=""
-            />
+            <img src={profilePhotoUrl} className="w-12 rounded-full" alt="" />
           </div>
           <div className="user__name grid">
             <span className="font-bold">{username}</span>

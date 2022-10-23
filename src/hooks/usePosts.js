@@ -7,7 +7,7 @@ export default function usePosts(userProfile) {
   useEffect(() => {
     const fetchData = async () => {
       const db = getFirestore();
-      const postsRef = collection(db, "photos");
+      const postsRef = collection(db, "posts");
       const postsQuery = query(postsRef);
       try {
         const snapshot = await getDocs(postsQuery);

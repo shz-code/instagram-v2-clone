@@ -1,7 +1,11 @@
 import "boxicons";
 import React from "react";
+import { useAuth } from "../contexts/AuthProvider";
+import useUserProfile from "../hooks/useUserProfile";
 
 export default function Nav() {
+  const { user } = useAuth();
+  const { userProfile, loading, profilePhotoUrl } = useUserProfile(user.uid);
   return (
     <div className="bg-white py-2 border border-b-1 border-gray-primary">
       <nav
@@ -21,7 +25,7 @@ export default function Nav() {
           </span>
           <span className="cursor-pointer">
             <img
-              src="./images/avaters/dali.jpg"
+              src={userProfile?.profilePhotoUrl}
               className="w-7 rounded-2xl"
               alt=""
             />

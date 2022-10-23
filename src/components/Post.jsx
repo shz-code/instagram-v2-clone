@@ -12,7 +12,15 @@ export default function Post({ post }) {
   const { user } = useAuth();
   const [comment, setComment] = useState("");
 
-  const { comments, dateCreated, imageSrc, likes, photoId, userId } = post;
+  const {
+    comments,
+    dateCreated,
+    imageSrc,
+    likes,
+    photoId,
+    userId,
+    profilePhotoUrl,
+  } = post;
   const date = new Date(dateCreated);
 
   const onEmojiClick = (emoObj, e) => {
@@ -42,11 +50,7 @@ export default function Post({ post }) {
       <div className="content mx-auto bg-white rounded border border-gray-primary w-3/4 md:2/4 xl:w-full">
         <div className="content__header p-3">
           <div className="user_avater flex gap-x-2 items-center">
-            <img
-              src="./images/avaters/dali.jpg"
-              className="w-8 rounded-2xl"
-              alt=""
-            />
+            <img src={profilePhotoUrl} className="w-8 rounded-2xl" alt="" />
             <span className="font-bold">
               {post?.username || "Not Provided"}
             </span>
@@ -94,7 +98,7 @@ export default function Post({ post }) {
             </p>
             <p className="text-sm text-gray-base">
               {date.toLocaleString("default", { month: "long" })}{" "}
-              {date.getDay()}
+              {date.getDate()}
             </p>
           </div>
           {emoji && (
