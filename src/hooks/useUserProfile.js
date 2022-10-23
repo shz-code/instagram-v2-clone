@@ -5,6 +5,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 
 export default function useUserProfile(uid) {
@@ -18,7 +19,9 @@ export default function useUserProfile(uid) {
       try {
         const snapshot = await getDocs(usersQuery);
         snapshot.forEach((doc) => {
-          setUserProfile({ ...doc.data() });
+          const newObj = _.cloneDeep(doc.data());
+          newObj.docId = doc.id;
+          setUserProfile({ ...newObj });
           setLoading(false);
         });
       } catch (err) {

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Loader() {
+export default function Loader({ stroke }) {
   return (
     <>
       <svg
@@ -22,7 +22,7 @@ export default function Loader() {
           cx="50"
           cy="50"
           fill="none"
-          stroke="#ffffff"
+          stroke={stroke ? stroke : "#fff"}
           strokeWidth="10"
           r="35"
           strokeDasharray="164.93361431346415 56.97787143782138"

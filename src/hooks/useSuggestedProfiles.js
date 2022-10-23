@@ -1,4 +1,5 @@
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 
 export default function useSuggestedProfile(uid) {
@@ -16,8 +17,10 @@ export default function useSuggestedProfile(uid) {
             doc.data().userId !== uid &&
             !doc.data().followers?.includes(uid)
           ) {
+            const newObj = _.cloneDeep(doc.data());
+            newObj.docId = doc.id;
             setSuggestedProfiles((prev) => {
-              return [...prev, doc.data()];
+              return [...prev, newObj];
             });
           }
         });

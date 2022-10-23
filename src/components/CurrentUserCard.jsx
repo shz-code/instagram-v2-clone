@@ -1,12 +1,9 @@
 import React, { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useAuth } from "../contexts/AuthProvider";
-import useUserProfile from "../hooks/useUserProfile";
 
-function CurrentUserCard() {
+function CurrentUserCard({ userProfile, loading }) {
   const { user, logout } = useAuth();
-
-  const { userProfile, loading } = useUserProfile(user.uid);
   const { username, fullName } = userProfile;
   return (
     <>

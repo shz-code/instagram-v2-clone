@@ -20,11 +20,12 @@ function App() {
           <Routes>
             <Route path="/*" element={<PrivateRoute />}>
               <Route path={FEED} element={<Layout />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/*" element={<PublicRoute />}>
               <Route path={AUTHENTICATION} element={<Authentication />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </AuthProvider>

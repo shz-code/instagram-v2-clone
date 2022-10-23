@@ -1,9 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import updateFollower from "../services/updateFollower";
+import updateFollowing from "../services/updateFollowing";
+import Loader from "./Loader";
 
-export default function UserCard({ profile }) {
-  console.log(profile);
-  const { username, fullName, userId } = profile;
+export default function UserCard({ profile, currentUser }) {
+  const [followed, setFollowed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { username, fullName, userId, docId } = profile;
+
+  const handleFollowBtn = async () => {
+    setLoading(true);
+    try {
+      await updateFollowing(docId, currentUser.userId);
+      await updateFollower(currentUser.docId, userId);
+      setFollowed(true);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className=" flex justify-between items-center py-4">
@@ -20,9 +37,22 @@ export default function UserCard({ profile }) {
             <span className="text-gray-base">{fullName}</span>
           </div>
         </div>
-        <Link to="/public" className="logout text-blue-medium font-bold">
-          Follow
-        </Link>
+        <div>
+          {loading ? (
+            <Loader stroke="#000" />
+          ) : followed ? (
+            <div className="logout text-gray-base font-bold cursor-pointer">
+              Following
+            </div>
+          ) : (
+            <div
+              className="logout text-blue-medium font-bold cursor-pointer"
+              onClick={handleFollowBtn}
+            >
+              Follow
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

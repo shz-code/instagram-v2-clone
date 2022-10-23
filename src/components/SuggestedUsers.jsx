@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthProvider";
 import useSuggestedProfile from "../hooks/useSuggestedProfiles";
 import UserCard from "./UserCard";
 
-export default function SuggestedUsers() {
+export default function SuggestedUsers({ userProfile }) {
   const { user } = useAuth();
   const { suggestedProfiles, loading } = useSuggestedProfile(user.uid);
   return (
@@ -19,7 +19,11 @@ export default function SuggestedUsers() {
           </div>
           <div className="aside__body__userCards">
             {suggestedProfiles.map((profile, index) => (
-              <UserCard key={index} profile={profile} />
+              <UserCard
+                currentUser={userProfile}
+                key={index}
+                profile={profile}
+              />
             ))}
           </div>
         </div>

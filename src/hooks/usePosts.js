@@ -1,7 +1,7 @@
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-export default function usePosts() {
+export default function usePosts(userProfile) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -12,9 +12,14 @@ export default function usePosts() {
       try {
         const snapshot = await getDocs(postsQuery);
         snapshot.forEach((doc) => {
-          setPosts((prev) => {
-            return [...prev, doc.data()];
-          });
+          if (
+            userProfile.following?.includes(doc.data().userId) &&
+            doc.data().userId !== userProfile.userId
+          ) {
+            setPosts((prev) => {
+              return [...prev, doc.data()];
+            });
+          }
           setLoading(false);
         });
       } catch (err) {
