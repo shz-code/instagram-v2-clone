@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import InstagramLogo from "../assets/images/logo.png";
 import { useAuth } from "../contexts/AuthProvider";
 import userNameExists from "../services/userNameExists";
@@ -15,7 +14,6 @@ export default function Signup({ setCurrentAuth }) {
   const [error, setError] = useState("");
 
   const { signup } = useAuth();
-  const navigater = useNavigate();
 
   const isInvalid =
     password !== confirmPassword ||
@@ -28,7 +26,6 @@ export default function Signup({ setCurrentAuth }) {
     try {
       await signup(name, username, email, password);
       setLoading(false);
-      navigater("/");
     } catch (err) {
       setLoading(false);
       if (err.code === "auth/email-already-in-use")

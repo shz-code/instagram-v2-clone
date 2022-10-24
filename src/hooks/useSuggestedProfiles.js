@@ -1,4 +1,10 @@
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  limit,
+  query,
+} from "firebase/firestore";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 
@@ -9,7 +15,7 @@ export default function useSuggestedProfile(uid) {
     const fetchData = async () => {
       const db = getFirestore();
       const suggestedUsersRef = collection(db, "users");
-      const suggestedUsersQuery = query(suggestedUsersRef);
+      const suggestedUsersQuery = query(suggestedUsersRef, limit(10));
       try {
         const snapshot = await getDocs(suggestedUsersQuery);
         snapshot.forEach((doc) => {

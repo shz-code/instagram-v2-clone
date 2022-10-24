@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import InstagramLogo from "../assets/images/logo.png";
 import { useAuth } from "../contexts/AuthProvider";
 import Loader from "./Loader";
@@ -11,7 +10,6 @@ export default function Login({ setCurrentAuth }) {
   const [error, setError] = useState("");
 
   const { login } = useAuth();
-  const navigater = useNavigate();
 
   const isInvalid = password.length < 3 || email === "";
 
@@ -22,7 +20,6 @@ export default function Login({ setCurrentAuth }) {
     try {
       await login(email, password);
       setLoading(false);
-      navigater("/");
     } catch (err) {
       setLoading(false);
       if (err.code === "auth/invalid-email")

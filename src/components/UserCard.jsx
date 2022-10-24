@@ -3,7 +3,7 @@ import updateFollower from "../services/updateFollower";
 import updateFollowing from "../services/updateFollowing";
 import Loader from "./Loader";
 
-export default function UserCard({ profile, currentUser }) {
+export default function UserCard({ profile, currentUser, setNewPostTrigger }) {
   const [followed, setFollowed] = useState(false);
   const [loading, setLoading] = useState(false);
   const { username, fullName, userId, docId, profilePhotoUrl } = profile;
@@ -15,6 +15,7 @@ export default function UserCard({ profile, currentUser }) {
       await updateFollower(currentUser.docId, userId);
       setFollowed(true);
       setLoading(false);
+      setNewPostTrigger(true);
     } catch (err) {
       setLoading(false);
       console.log(err);

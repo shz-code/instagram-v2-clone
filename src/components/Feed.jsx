@@ -7,7 +7,7 @@ import Posts from "./Posts";
 
 export default function Feed() {
   const { user } = useAuth();
-  const { userProfile, loading } = useUserProfile(user.uid);
+  const { userProfile, loading } = useUserProfile(user?.uid);
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 mt-8">
       {loading ? (

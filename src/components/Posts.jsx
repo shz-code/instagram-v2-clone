@@ -13,7 +13,9 @@ export default function Posts({ userProfile }) {
       {loading ? (
         <Skeleton count={5} height={550} />
       ) : posts.length > 0 ? (
-        posts.map((post, index) => <Post post={post} key={index} />)
+        posts.map((post, index) => (
+          <Post post={post} key={index} userProfile={userProfile} />
+        ))
       ) : (
         "No Following"
       )}

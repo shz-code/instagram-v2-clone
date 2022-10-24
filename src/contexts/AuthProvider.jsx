@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../lib/firebase";
 
 const AuthContext = createContext();
@@ -19,6 +20,8 @@ export const useAuth = () => {
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const navigator = useNavigate();
 
   useEffect(() => {
     const auth = getAuth();
@@ -37,6 +40,7 @@ export default function AuthProvider({ children }) {
         userId: user.uid,
         username: username,
         fullName: name,
+        profilePhotoUrl: "./images/avaters/default.png",
         emailAddress: email,
         following: [],
         followers: [],
@@ -50,8 +54,8 @@ export default function AuthProvider({ children }) {
   const signup = async (name, username, email, password) => {
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password);
+    await SetProfile(auth.currentUser, name, username, email);
     await updateProfile(auth.currentUser, { displayName: username });
-    SetProfile(auth.currentUser, name, username, email);
     setUser({ ...auth.currentUser });
   };
 

@@ -56,10 +56,12 @@ const posts = [
       {
         displayName: "raphael",
         comment: "Love this place, looks like my animal farm!",
+        profilePhotoUrl: `./images/avaters/raphael.jpg`,
       },
       {
         displayName: "orwell",
         comment: "Would you mind if I used this picture?",
+        profilePhotoUrl: `./images/avaters/orwell.jpg`,
       },
     ],
     userLatitude: "40.7128°",
@@ -78,10 +80,12 @@ const posts = [
       {
         displayName: "dali",
         comment: "Love this place, looks like my animal farm!",
+        profilePhotoUrl: `./images/avaters/dali.jpg`,
       },
       {
         displayName: "orwell",
         comment: "Would you mind if I used this picture?",
+        profilePhotoUrl: `./images/avaters/orwell.jpg`,
       },
     ],
     userLatitude: "40.7128°",
@@ -100,10 +104,12 @@ const posts = [
       {
         displayName: "raphael",
         comment: "Love this place, looks like my animal farm!",
+        profilePhotoUrl: `./images/avaters/raphael.jpg`,
       },
       {
         displayName: "orwell",
         comment: "Would you mind if I used this picture?",
+        profilePhotoUrl: `./images/avaters/orwell.jpg`,
       },
     ],
     userLatitude: "40.7128°",
@@ -122,10 +128,12 @@ const posts = [
       {
         displayName: "raphael",
         comment: "Love this place, looks like my animal farm!",
+        profilePhotoUrl: `./images/avaters/raphael.jpg`,
       },
       {
         displayName: "orwell",
         comment: "Would you mind if I used this picture?",
+        profilePhotoUrl: `./images/avaters/kaorwellrl.jpg`,
       },
     ],
     userLatitude: "40.7128°",
@@ -144,10 +152,12 @@ const posts = [
       {
         displayName: "raphael",
         comment: "Love this place, looks like my animal farm!",
+        profilePhotoUrl: `./images/avaters/raphael.jpg`,
       },
       {
         displayName: "karl",
         comment: "Would you mind if I used this picture?",
+        profilePhotoUrl: `./images/avaters/karl.jpg`,
       },
     ],
     userLatitude: "40.7128°",

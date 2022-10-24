@@ -1,4 +1,5 @@
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 
 export default function usePosts(userProfile) {
@@ -16,8 +17,10 @@ export default function usePosts(userProfile) {
             userProfile.following?.includes(doc.data().userId) &&
             doc.data().userId !== userProfile.userId
           ) {
+            const newObj = _.cloneDeep(doc.data());
+            newObj.docId = doc.id;
             setPosts((prev) => {
-              return [...prev, doc.data()];
+              return [...prev, newObj];
             });
           }
           setLoading(false);

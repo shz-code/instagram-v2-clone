@@ -1,11 +1,12 @@
 import "boxicons";
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthProvider";
 import useUserProfile from "../hooks/useUserProfile";
 
 export default function Nav() {
-  const { user } = useAuth();
-  const { userProfile, loading, profilePhotoUrl } = useUserProfile(user.uid);
+  const [show, setShow] = useState(false);
+  const { user, logout } = useAuth();
+  const { userProfile, loading, profilePhotoUrl } = useUserProfile(user?.uid);
   return (
     <div className="bg-white py-2 border border-b-1 border-gray-primary">
       <nav
@@ -13,7 +14,7 @@ export default function Nav() {
         style={{ maxWidth: "900px" }}
       >
         <div className="logo font-bold text-2xl">Instagram</div>
-        <div className="account flex gap-x-3 items-center">
+        <div className="account flex gap-x-3 items-center relative">
           <span className="relative top-1 cursor-pointer">
             <box-icon type="solid" size="sm" name="home-alt-2"></box-icon>
           </span>
@@ -23,13 +24,22 @@ export default function Nav() {
           <span className="relative top-1 cursor-pointer">
             <box-icon name="bell" size="sm" s></box-icon>
           </span>
-          <span className="cursor-pointer">
+          <span className="cursor-pointer" onClick={() => setShow((e) => !e)}>
             <img
               src={userProfile?.profilePhotoUrl}
               className="w-7 rounded-2xl"
               alt=""
             />
           </span>
+          {show && (
+            <div className="nav__user__modal absolute -right-10 -bottom-20 bg-white py-5 px-1 rounded">
+              <div className="w-full px-5 bg-gray-primary cursor-pointer">
+                <span onClick={() => logout()} className="text-gray-base">
+                  Logout
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
     </div>
