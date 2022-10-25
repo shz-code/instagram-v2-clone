@@ -2,6 +2,7 @@ import "boxicons";
 import EmojiPicker from "emoji-picker-react";
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 import updateComments from "../services/updateComments";
 import updateLikes from "../services/updateLikes";
@@ -13,8 +14,8 @@ export default function Post({ post, userProfile }) {
     dateCreated,
     imageSrc,
     likes,
-    photoId,
-    userId,
+    postId,
+    userId: postUserId,
     profilePhotoUrl,
     docId,
   } = post;
@@ -51,11 +52,11 @@ export default function Post({ post, userProfile }) {
   const handleLikeBtn = async (e) => {
     if (liked) {
       setLiked(false);
-      await updateLikes(docId, userProfile.userId, false);
+      await updateLikes(docId, userProfile.userId, false, postUserId, postId);
       setLikedCount((e) => e - 1);
     } else {
       setLiked(true);
-      await updateLikes(docId, userProfile.userId, true);
+      await updateLikes(docId, userProfile.userId, true, postUserId, postId);
       setLikedCount((e) => e + 1);
       postRef.current.style.display = "flex";
     }
@@ -79,7 +80,9 @@ export default function Post({ post, userProfile }) {
           docId,
           comment,
           userProfile.username,
-          userProfile.profilePhotoUrl
+          userProfile.profilePhotoUrl,
+          postUserId,
+          postId
         );
         setModComments((prev) => {
           return [...prev, ...newArr];
@@ -98,10 +101,12 @@ export default function Post({ post, userProfile }) {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      if (comment.length > 106) textAreaRef.current.setAttribute("rows", "3");
-      else if (comment.length > 53)
+      if (comment.length > 117) textAreaRef.current.setAttribute("rows", "4");
+      else if (comment.length > 78)
+        textAreaRef.current.setAttribute("rows", "3");
+      else if (comment.length > 39)
         textAreaRef.current.setAttribute("rows", "2");
-      else if (comment.length < 53)
+      else if (comment.length < 39)
         textAreaRef.current.setAttribute("rows", "1");
     }
   }, [comment]);
@@ -121,9 +126,9 @@ export default function Post({ post, userProfile }) {
           <div className="content__header p-3">
             <div className="user_avater flex gap-x-2 items-center">
               <img src={profilePhotoUrl} className="w-8 rounded-2xl" alt="" />
-              <span className="font-bold cursor-pointer">
+              <Link to={`p/${postUserId}`} className="font-bold cursor-pointer">
                 {post?.username || "Not Provided"}
-              </span>
+              </Link>
             </div>
           </div>
           <div
@@ -158,7 +163,7 @@ export default function Post({ post, userProfile }) {
                     <box-icon type="regular" name="heart"></box-icon>
                   )}
                 </span>
-                <label className="cursor-pointer" htmlFor={photoId + 1}>
+                <label className="cursor-pointer" htmlFor={postId + 1}>
                   <box-icon name="comment"></box-icon>
                 </label>
               </div>
@@ -219,7 +224,7 @@ export default function Post({ post, userProfile }) {
               </div>
               <textarea
                 ref={textAreaRef}
-                id={photoId + 1}
+                id={postId + 1}
                 rows={1}
                 type="text"
                 className="outline-none w-full px-3 py-1 resize-none text-sm"

@@ -7,10 +7,11 @@ import PublicRoute from "./components/PublicRoute";
 import AuthProvider from "./contexts/AuthProvider";
 import "./index.css";
 import NotFound from "./pages/NotFound";
-import { AUTHENTICATION, FEED } from "./Routes.js";
+import { AUTHENTICATION, HOME, PROFILE } from "./Routes.js";
 
 const Authentication = lazy(() => import("./pages/Authentication"));
-const Layout = lazy(() => import("./pages/Layout"));
+const Home = lazy(() => import("./pages/Home"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Suspense fallback={<p>Loading...</p>}>
           <Routes>
             <Route path="/*" element={<PrivateRoute />}>
-              <Route path={FEED} element={<Layout />} />
+              <Route path={HOME} element={<Home />} />
+              <Route path={PROFILE} element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/*" element={<PublicRoute />}>

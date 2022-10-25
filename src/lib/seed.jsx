@@ -1,4 +1,10 @@
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 
 const users = [
   {
@@ -6,13 +12,13 @@ const users = [
     username: "karl",
     fullName: "Karl Hadwen",
     emailAddress: "karlhadwen@gmail.com",
-    following: ["2"],
-    followers: ["2", "3", "4"],
+    following: ["jjdgtawns1762AS"],
+    followers: ["jjdgtawns1762AS", "asdb123asd2", "8715asawdsZAW"],
     dateCreated: Date.now(),
     profilePhotoUrl: `./images/avaters/karl.jpg`,
   },
   {
-    userId: "2",
+    userId: "jjdgtawns1762AS",
     username: "raphael",
     fullName: "Raffaello Sanzio da Urbino",
     emailAddress: "raphael@sanzio.com",
@@ -22,7 +28,7 @@ const users = [
     profilePhotoUrl: `./images/avaters/raphael.jpg`,
   },
   {
-    userId: "3",
+    userId: "asdb123asd2",
     username: "dali",
     fullName: "Salvador Dalí",
     emailAddress: "salvador@dali.com",
@@ -32,12 +38,12 @@ const users = [
     profilePhotoUrl: `./images/avaters/dali.jpg`,
   },
   {
-    userId: "4",
+    userId: "8715asawdsZAW",
     username: "orwell",
     fullName: "George Orwell",
     emailAddress: "george@orwell.com",
     following: [],
-    followers: ["1VKziKKg8rTAZEw4N8mJneGDEWu2"],
+    followers: [],
     dateCreated: Date.now(),
     profilePhotoUrl: `./images/avaters/orwell.jpg`,
   },
@@ -45,8 +51,8 @@ const users = [
 
 const posts = [
   {
-    photoId: "1",
-    userId: "3",
+    postId: "1",
+    userId: "asdb123asd2",
     username: "dali",
     profilePhotoUrl: `./images/avaters/dali.jpg`,
     imageSrc: `./images/users/raphael/1.jpg`,
@@ -69,8 +75,8 @@ const posts = [
     dateCreated: Date.now(),
   },
   {
-    photoId: "2",
-    userId: "2",
+    postId: "2",
+    userId: "jjdgtawns1762AS",
     username: "raphael",
     profilePhotoUrl: `./images/avaters/raphael.jpg`,
     imageSrc: `./images/users/raphael/2.jpg`,
@@ -93,8 +99,8 @@ const posts = [
     dateCreated: Date.now(),
   },
   {
-    photoId: "3",
-    userId: "3",
+    postId: "3",
+    userId: "asdb123asd2",
     username: "dali",
     profilePhotoUrl: `./images/avaters/dali.jpg`,
     imageSrc: `./images/users/raphael/3.jpg`,
@@ -117,7 +123,7 @@ const posts = [
     dateCreated: Date.now(),
   },
   {
-    photoId: "4",
+    postId: "4",
     userId: "1VKziKKg8rTAZEw4N8mJneGDEWu2",
     username: "karl",
     profilePhotoUrl: `./images/avaters/karl.jpg`,
@@ -141,8 +147,8 @@ const posts = [
     dateCreated: Date.now(),
   },
   {
-    photoId: "5",
-    userId: "4",
+    postId: "5",
+    userId: "8715asawdsZAW",
     username: "orwell",
     profilePhotoUrl: `./images/avaters/orwell.jpg`,
     imageSrc: `./images/users/raphael/5.jpg`,
@@ -191,4 +197,31 @@ const addPosts = async () => {
   }
 };
 
-export { addPosts, addUser };
+const addUserPosts = async () => {
+  const db = getFirestore();
+  const docRef = doc(db, "1VKziKKg8rTAZEw4N8mJneGDEWu2", "4");
+  try {
+    await setDoc(docRef, {
+      postId: "4",
+      userId: "asdb123asd2",
+      imageSrc: `./images/users/raphael/3.jpg`,
+      likes: [],
+      comments: [
+        {
+          displayName: "raphael",
+          comment: "Love this place, looks like my animal farm!",
+          profilePhotoUrl: `./images/avaters/raphael.jpg`,
+        },
+        {
+          displayName: "orwell",
+          comment: "Would you mind if I used this picture?",
+          profilePhotoUrl: `./images/avaters/kaorwellrl.jpg`,
+        },
+      ],
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { addPosts, addUser, addUserPosts };

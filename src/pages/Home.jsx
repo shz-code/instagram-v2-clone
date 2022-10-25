@@ -2,7 +2,7 @@ import React from "react";
 import Feed from "../components/Feed";
 import Nav from "../components/Nav";
 
-export default function Layout() {
+export default function Home() {
   return (
     <div>
       <Nav />

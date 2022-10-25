@@ -14,6 +14,8 @@ const firebase = initializeApp(firebaseConfig);
 
 // addUser();
 
+// addUserPosts();
+
 // addPosts();
 
 export default firebase;
