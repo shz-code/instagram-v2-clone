@@ -17,21 +17,17 @@ export default function Upload({ setCurrentPage }) {
     form.append("image", file);
     form.append("name", "tour");
 
-    const handleImage = (e) => {
-      let filelist = e.target.files;
-      let file = filelist[0];
-      let fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        let fileURL = fileReader.result;
-        setImage(fileURL);
-      };
-      // const res = await axios({
-      //   method: "post",
-      //   url: "https://api.imgbb.com/1/upload",
-      //   data: form,
-      // });
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      let fileURL = fileReader.result;
+      setImage(fileURL);
     };
+
+    // const res = await axios({
+    //   method: "post",
+    //   url: "https://api.imgbb.com/1/upload",
+    //   data: form,
+    // });
   };
   return (
     <div
