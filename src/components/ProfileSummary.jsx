@@ -13,9 +13,9 @@ export default function ProfileSummary({ userProfile, userPostsCount }) {
         />
       </div>
       <div className="user__details grid gap-y-5 justify-center md:justify-start">
-        <div className="row flex justify-center md:justify-start items-center gap-x-4">
+        <div className="row flex justify-center md:justify-start items-center gap-x-4 mt-4">
           <span className=" text-2xl">{username}</span>
-          <span className="border border-gray-primary px-2 py-1 rounded mt-4">
+          <span className="border border-gray-primary px-2 py-1 rounded">
             Edit Profile
           </span>
         </div>

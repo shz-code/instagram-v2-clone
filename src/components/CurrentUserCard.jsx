@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 
 function CurrentUserCard({ userProfile, loading }) {
@@ -16,7 +17,9 @@ function CurrentUserCard({ userProfile, loading }) {
               <img src={profilePhotoUrl} className="w-12 rounded-full" alt="" />
             </div>
             <div className="user__name grid">
-              <span className="font-bold">{username}</span>
+              <Link to={`p/${user.uid}`} className="font-bold cursor-pointer">
+                {username}
+              </Link>
               <span className="text-gray-base">{fullName}</span>
             </div>
           </div>
