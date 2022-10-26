@@ -1858,11 +1858,6 @@ ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
-imgbb-uploader@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/imgbb-uploader/-/imgbb-uploader-1.5.0.tgz#9b2245bb68845c45f6b6f83635a637aa055f39c9"
-  integrity sha512-60cEP5Mw48ZM0evf/mo1j/sHPzgaM83z9cdjDRf6DNrpbWk/dw+2UIe2MRtC1HqQ6i9GyJfGOzNbspriWVGTeA==
-
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
