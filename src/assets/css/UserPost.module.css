@@ -1,0 +1,3 @@
+.user__post__photo:hover .user__post__states {
+    display: flex;
+}

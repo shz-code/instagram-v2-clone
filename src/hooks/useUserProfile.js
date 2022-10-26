@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 export default function useUserProfile(uid) {
   const [userProfile, setUserProfile] = useState({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const db = getFirestore();
@@ -18,11 +19,13 @@ export default function useUserProfile(uid) {
       const usersQuery = query(usersRef, where("userId", "==", uid));
       try {
         const snapshot = await getDocs(usersQuery);
+        setError(true);
         snapshot.forEach((doc) => {
           const newObj = _.cloneDeep(doc.data());
           newObj.docId = doc.id;
           setUserProfile({ ...newObj });
           setLoading(false);
+          setError(false);
         });
       } catch (err) {
         console.log(err);
@@ -36,5 +39,6 @@ export default function useUserProfile(uid) {
   return {
     userProfile,
     loading,
+    error,
   };
 }
