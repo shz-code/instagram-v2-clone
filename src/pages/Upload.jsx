@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // import axios from "axios";
+=======
+>>>>>>> 995be91ef9da5eee4c3d8e0a7766dce90c6f263a
 import React, { useEffect, useState } from "react";
 
 export default function Upload({ setCurrentPage }) {
@@ -7,6 +10,7 @@ export default function Upload({ setCurrentPage }) {
     setCurrentPage("upload");
   }, []);
 
+<<<<<<< HEAD
   const handleImage = async (e) => {
     let file = e.target.files[0];
 
@@ -17,16 +21,25 @@ export default function Upload({ setCurrentPage }) {
     form.append("image", file);
     form.append("name", "tour");
 
+=======
+  const handleImage = (e) => {
+    let filelist = e.target.files;
+    let file = filelist[0];
+    let fileReader = new FileReader();
+>>>>>>> 995be91ef9da5eee4c3d8e0a7766dce90c6f263a
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
       let fileURL = fileReader.result;
       setImage(fileURL);
     };
+<<<<<<< HEAD
     // const res = await axios({
     //   method: "post",
     //   url: "https://api.imgbb.com/1/upload",
     //   data: form,
     // });
+=======
+>>>>>>> 995be91ef9da5eee4c3d8e0a7766dce90c6f263a
   };
   return (
     <div
