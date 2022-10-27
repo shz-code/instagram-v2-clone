@@ -1,11 +1,32 @@
 // import axios from "axios";
+import "boxicons";
 import React, { useEffect, useState } from "react";
+import UploadPostDetails from "../components/UploadPostDetails";
+import UploadPostImage from "../components/UploadPostImage";
+import { useAuth } from "../contexts/AuthProvider";
+import useUserProfile from "../hooks/useUserProfile";
 
 export default function Upload({ setCurrentPage }) {
+  const { user } = useAuth();
+  const { userProfile, loading } = useUserProfile(user.uid);
+
   const [image, setImage] = useState();
+  const [emoji, setEmoji] = useState(false);
+  const [caption, setCaption] = useState("");
+
   useEffect(() => {
     setCurrentPage("upload");
   }, []);
+
+  const handleClickEvent = (e) => {
+    if (
+      e.target.getAttribute("name") !== "face" &&
+      emoji &&
+      !e.target.classList.contains("epr-btn") &&
+      !e.target.classList.contains("epr-emoji-img")
+    )
+      setEmoji((e) => !e);
+  };
 
   const handleImage = async (e) => {
     let file = e.target.files[0];
@@ -29,21 +50,27 @@ export default function Upload({ setCurrentPage }) {
     //   data: form,
     // });
   };
+
   return (
     <div
       className="container px-1 w-full md:w-3/4 mx-auto mt-8"
       style={{ maxWidth: "850px" }}
+      onClick={handleClickEvent}
     >
-      <form className="grid grid-cols-2">
-        <div className="image__upload">
-          <input type="file" onChange={handleImage} />
-          <img src={image} alt="no image" width="350" />
-        </div>
-        <div className="post__details">
-          <div className="caption">
-            <input type="text" />
-          </div>
-        </div>
+      <form className="block lg:grid grid-cols-2 border border-gray-primary bg-white">
+        <UploadPostImage
+          image={image}
+          handleImage={handleImage}
+          setImage={setImage}
+        />
+        <UploadPostDetails
+          caption={caption}
+          setCaption={setCaption}
+          emoji={emoji}
+          setEmoji={setEmoji}
+          loading={loading}
+          userProfile={userProfile}
+        />
       </form>
     </div>
   );
