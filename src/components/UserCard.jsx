@@ -11,8 +11,8 @@ export default function UserCard({ profile, currentUser, setNewPostTrigger }) {
   const handleFollowBtn = async () => {
     setLoading(true);
     try {
-      await updateFollowing(docId, currentUser.userId);
-      await updateFollower(currentUser.docId, userId);
+      await updateFollower(docId, currentUser.userId);
+      await updateFollowing(currentUser.docId, userId);
       setFollowed(true);
       setLoading(false);
       setNewPostTrigger(true);

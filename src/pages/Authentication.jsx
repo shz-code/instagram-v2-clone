@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginImg from "../assets/images/iphone-with-profile.jpg";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 
-export default function Authentication() {
+export default function Authentication({ setCurrentPage }) {
   const [currentAuth, setCurrentAuth] = useState("login");
+  useEffect(() => {
+    setCurrentPage("auth");
+  }, []);
 
   return (
     <div>

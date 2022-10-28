@@ -40,7 +40,7 @@ export default function AuthProvider({ children }) {
         userId: user.uid,
         username: username,
         fullName: name,
-        profilePhotoUrl: "./images/avaters/default.png",
+        profilePhotoUrl: "/images/avaters/default.png",
         emailAddress: email,
         following: [],
         followers: [],

@@ -5,7 +5,7 @@ const updateFollowing = async (docId, userId) => {
   const profileRef = doc(db, "users", docId);
   try {
     await updateDoc(profileRef, {
-      followers: arrayUnion(userId),
+      following: arrayUnion(userId),
     });
   } catch (err) {
     console.log(err);

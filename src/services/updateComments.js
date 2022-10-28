@@ -10,7 +10,7 @@ const updateComments = async (
 ) => {
   const db = getFirestore();
   const postsRef = doc(db, "posts", docId);
-  const userPostRef = doc(db, postUserId, postId);
+  const userPostRef = doc(db, postUserId.toString(), postId.toString());
   try {
     await updateDoc(postsRef, {
       comments: arrayUnion({

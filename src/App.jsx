@@ -16,11 +16,11 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Upload = lazy(() => import("./pages/Upload"));
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("auth");
   return (
     <Router>
       <AuthProvider>
-        <Nav currentPage={currentPage} />
+        {currentPage !== "auth" && <Nav currentPage={currentPage} />}
         <Suspense fallback={<p>Loading...</p>}>
           <Routes>
             <Route path="/*" element={<PrivateRoute />}>
@@ -39,7 +39,10 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/*" element={<PublicRoute />}>
-              <Route path={AUTHENTICATION} element={<Authentication />} />
+              <Route
+                path={AUTHENTICATION}
+                element={<Authentication setCurrentPage={setCurrentPage} />}
+              />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
