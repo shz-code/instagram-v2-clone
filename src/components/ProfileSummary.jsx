@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthProvider";
 import useUserProfile from "../hooks/useUserProfile";
 import updateFollower from "../services/updateFollower";
 import updateFollowing from "../services/updateFollowing";
+import updateNotification from "../services/updateNotification";
 
 export default function ProfileSummary({
   userProfile: visitingUserProfile,
@@ -41,6 +42,13 @@ export default function ProfileSummary({
         setFollowUser(true);
         await updateFollower(docId, userProfile.userId, true);
         await updateFollowing(userProfile.docId, userId, true);
+        await updateNotification(
+          userProfile.userId,
+          userProfile.username,
+          userProfile.profilePhotoUrl,
+          "follow",
+          userId
+        );
       }
     } catch (err) {
       console.log(err);

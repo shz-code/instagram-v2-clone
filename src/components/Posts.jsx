@@ -9,7 +9,7 @@ export default function Posts({ userProfile }) {
   const { posts, loading } = usePosts(userProfile);
 
   return (
-    <div className="grid gap-y-8">
+    <div className="grid gap-y-8 overflow-x-hidden">
       {loading ? (
         <Skeleton count={5} height={550} />
       ) : posts.length > 0 ? (
@@ -17,7 +17,7 @@ export default function Posts({ userProfile }) {
           <Post post={post} key={index} userProfile={userProfile} />
         ))
       ) : (
-        "No Following"
+        "No Posts to show. Please follow a user to see his/her posts."
       )}
     </div>
   );

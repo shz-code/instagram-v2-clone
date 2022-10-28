@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import updateFollower from "../services/updateFollower";
 import updateFollowing from "../services/updateFollowing";
+import updateNotification from "../services/updateNotification";
 import Loader from "./Loader";
 
 export default function UserCard({ profile, currentUser, setNewPostTrigger }) {
@@ -12,8 +13,15 @@ export default function UserCard({ profile, currentUser, setNewPostTrigger }) {
   const handleFollowBtn = async () => {
     setLoading(true);
     try {
-      await updateFollower(docId, currentUser.userId);
-      await updateFollowing(currentUser.docId, userId);
+      await updateFollower(docId, currentUser.userId, true);
+      await updateFollowing(currentUser.docId, userId, true);
+      await updateNotification(
+        currentUser.userId,
+        currentUser.username,
+        currentUser.profilePhotoUrl,
+        "follow",
+        userId
+      );
       setFollowed(true);
       setLoading(false);
       setNewPostTrigger(true);

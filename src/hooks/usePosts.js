@@ -1,15 +1,22 @@
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 
 export default function usePosts(userProfile) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const db = getFirestore();
       const postsRef = collection(db, "posts");
-      const postsQuery = query(postsRef);
+      const postsQuery = query(postsRef, orderBy("dateCreated", "desc"));
       try {
         const snapshot = await getDocs(postsQuery);
         snapshot.forEach((doc) => {
@@ -33,7 +40,7 @@ export default function usePosts(userProfile) {
     fetchData();
 
     return fetchData;
-  }, [userProfile.userId]);
+  }, []);
   return {
     posts,
     loading,

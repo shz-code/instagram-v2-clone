@@ -4,9 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 import useUserProfile from "../hooks/useUserProfile";
 import { HOME, UPLOAD } from "../Routes";
+import UserNotifications from "./UserNotifications";
 
 export default function Nav({ currentPage }) {
   const [show, setShow] = useState(false);
+  const [showNotis, setshowNotis] = useState(false);
+
   const { user, logout } = useAuth();
   const { userProfile, loading } = useUserProfile(user?.uid);
 
@@ -87,6 +90,7 @@ export default function Nav({ currentPage }) {
               alt=""
             />
           </span>
+          {showNotis && <UserNotifications />}
           {show && (
             <div className="nav__user__modal absolute -right-10 -bottom-20 z-10 bg-white py-5rounded">
               <div className="w-full px-5 cursor-pointer">

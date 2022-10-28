@@ -3,9 +3,11 @@ import EmojiPicker from "emoji-picker-react";
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import style from "../assets/css/Post.module.css";
 import { useAuth } from "../contexts/AuthProvider";
 import updateComments from "../services/updateComments";
 import updateLikes from "../services/updateLikes";
+import updateNotification from "../services/updateNotification";
 import Comment from "./Comment";
 
 export default function Post({ post, userProfile }) {
@@ -19,6 +21,7 @@ export default function Post({ post, userProfile }) {
     profilePhotoUrl,
     docId,
   } = post;
+  const { user } = useAuth();
 
   const [showComments, setShowCommetns] = useState(false);
   const [emoji, setEmoji] = useState(false);
@@ -26,7 +29,6 @@ export default function Post({ post, userProfile }) {
   const [likedCount, setLikedCount] = useState(likes.length);
   const [caption, setScaption] = useState(post.caption);
   const [showDesc, setShowDesc] = useState(caption.length < 40);
-  const { user } = useAuth();
   const [comment, setComment] = useState("");
   const [modComments, setModComments] = useState([]);
   const [showCommentSubmitAlert, setShowCommentAlert] = useState(false);
@@ -57,6 +59,13 @@ export default function Post({ post, userProfile }) {
     } else {
       setLiked(true);
       await updateLikes(docId, userProfile.userId, true, postUserId, postId);
+      await updateNotification(
+        userProfile.userId,
+        userProfile.username,
+        userProfile.profilePhotoUrl,
+        "like",
+        postUserId
+      );
       setLikedCount((e) => e + 1);
       postRef.current.style.display = "flex";
     }
@@ -85,6 +94,13 @@ export default function Post({ post, userProfile }) {
           postUserId,
           postId,
           user.uid
+        );
+        await updateNotification(
+          userProfile.userId,
+          userProfile.username,
+          userProfile.profilePhotoUrl,
+          "comment",
+          postUserId
         );
         setModComments((prev) => {
           return [...prev, ...newArr];
@@ -121,7 +137,7 @@ export default function Post({ post, userProfile }) {
   return (
     <>
       <div
-        className="grid justify-center content__box"
+        className={`grid justify-center ${style.content__box} w-full`}
         onClick={handleClickEvent}
       >
         <div className="content mx-auto bg-white rounded border border-gray-primary w-3/4 md:2/4 xl:w-full">
@@ -134,10 +150,14 @@ export default function Post({ post, userProfile }) {
             </div>
           </div>
           <div
-            className="content__photo cursor-pointer relative"
+            className={`${style.content__photo} cursor-pointer relative`}
             onDoubleClick={handleLikeBtn}
           >
-            <img src={imageSrc} className="w-full" alt="" />
+            <img
+              src={imageSrc}
+              className={`w-full ${style.content__photo__img}`}
+              alt="photo"
+            />
             <span
               className="absolute top-0 left-0 justify-center items-center hidden h-full w-full transition-all ease-in-out"
               ref={postRef}
