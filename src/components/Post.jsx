@@ -73,6 +73,7 @@ export default function Post({ post, userProfile }) {
           comment: comment,
           displayName: userProfile.username,
           profilePhotoUrl: userProfile.profilePhotoUrl,
+          userId: user.uid,
         },
       ];
       try {
@@ -82,7 +83,8 @@ export default function Post({ post, userProfile }) {
           userProfile.username,
           userProfile.profilePhotoUrl,
           postUserId,
-          postId
+          postId,
+          user.uid
         );
         setModComments((prev) => {
           return [...prev, ...newArr];
@@ -184,10 +186,12 @@ export default function Post({ post, userProfile }) {
             <div className="content__body__postDesc text-sm">
               <p className="font-bold cursor-pointer">{likedCount} Likes</p>
               <p className="text-sm w-full">
-                <span className="font-bold break-words cursor-pointer">
-                  {" "}
+                <Link
+                  to={`/p/${postUserId}`}
+                  className="font-bold break-words cursor-pointer"
+                >
                   {post?.username || "Not Provided"}
-                </span>{" "}
+                </Link>{" "}
                 {showDesc ? `${caption}` : `${caption.slice(0, 40)}...`}{" "}
                 {!showDesc && (
                   <span
@@ -269,7 +273,7 @@ export default function Post({ post, userProfile }) {
             <div className="commetns__box border-gray-primary border-t p-3 grid gap-y-3 text-sm">
               <p className="text-gray-base font-bold">All Comments</p>
               {modComments.map((comment, index) => (
-                <Comment cmt={comment} key={index} />
+                <Comment cmt={comment} key={index} postUserId={postUserId} />
               ))}
             </div>
           )}

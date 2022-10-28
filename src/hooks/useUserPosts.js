@@ -11,6 +11,7 @@ export default function usePosts(userId) {
       const userPostsQuery = query(userPostsRef);
       try {
         const snapshot = await getDocs(userPostsQuery);
+        setUserPosts([]);
         snapshot.forEach((doc) => {
           setUserPosts((prev) => {
             return [...prev, doc.data()];
@@ -25,7 +26,7 @@ export default function usePosts(userId) {
     fetchData();
 
     return fetchData;
-  }, []);
+  }, [userId]);
   return {
     userPosts,
     loadingUP,

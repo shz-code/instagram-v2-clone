@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Loader({ stroke }) {
+export default function Loader({ stroke, ...rest }) {
   return (
     <>
       <svg
@@ -17,6 +17,7 @@ export default function Loader({ stroke }) {
         height="25px"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
+        {...rest}
       >
         <circle
           cx="50"

@@ -35,7 +35,7 @@ export default function useUserProfile(uid) {
     fetchData();
 
     return fetchData;
-  }, []);
+  }, [uid]);
   return {
     userProfile,
     loading,

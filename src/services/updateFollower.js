@@ -1,12 +1,24 @@
-import { arrayUnion, doc, getFirestore, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 
-const updateFollower = async (docId, userId) => {
+const updateFollower = async (docId, userId, flag) => {
   const db = getFirestore();
   const profileRef = doc(db, "users", docId);
   try {
-    await updateDoc(profileRef, {
-      followers: arrayUnion(userId),
-    });
+    if (flag) {
+      await updateDoc(profileRef, {
+        followers: arrayUnion(userId),
+      });
+    } else {
+      await updateDoc(profileRef, {
+        followers: arrayRemove(userId),
+      });
+    }
   } catch (err) {
     console.log(err);
   }

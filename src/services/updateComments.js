@@ -6,7 +6,8 @@ const updateComments = async (
   username,
   profilePhotoUrl,
   postUserId,
-  postId
+  postId,
+  userId
 ) => {
   const db = getFirestore();
   const postsRef = doc(db, "posts", docId);
@@ -17,6 +18,7 @@ const updateComments = async (
         comment: comment,
         displayName: username,
         profilePhotoUrl: profilePhotoUrl,
+        userId: userId,
       }),
     });
     await updateDoc(userPostRef, {

@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Comment({ cmt }) {
-  const { comment, displayName, profilePhotoUrl } = cmt;
+  const { comment, displayName, profilePhotoUrl, userId } = cmt;
   return (
     <div className="comment grid grid-cols-[30%_70%] items-center gap-x-4 bg-gray-background rounded">
       <div className="user__info grid gap-x-2 grid-cols-[30%_70%] items-center font-bold cursor-pointer">
@@ -14,7 +15,9 @@ export default function Comment({ cmt }) {
             alt="User"
           />
         </div>
-        <span className="break-words">{displayName}</span>
+        <Link to={userId && `/p/${userId}`} className="break-words">
+          {displayName}
+        </Link>
       </div>
       <div>{comment}</div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import updateFollower from "../services/updateFollower";
 import updateFollowing from "../services/updateFollowing";
 import Loader from "./Loader";
@@ -30,7 +31,9 @@ export default function UserCard({ profile, currentUser, setNewPostTrigger }) {
             <img src={profilePhotoUrl} className="w-12 rounded-full" alt="" />
           </div>
           <div className="user__name grid">
-            <span className="font-bold">{username}</span>
+            <Link to={`/p/${userId}`} className="font-bold cursor-pointer">
+              {username}
+            </Link>
             <span className="text-gray-base">{fullName}</span>
           </div>
         </div>

@@ -33,7 +33,7 @@ export default function usePosts(userProfile) {
     fetchData();
 
     return fetchData;
-  }, []);
+  }, [userProfile.userId]);
   return {
     posts,
     loading,

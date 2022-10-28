@@ -13,12 +13,12 @@ export default function Profile({ setCurrentPage }) {
 
   useEffect(() => {
     setCurrentPage("profile");
-  }, []);
+  }, [id]);
 
   return (
     <div>
       <div
-        className="container px-1 w-full md:w-3/4 mx-auto"
+        className="container px-1 w-full lg:w-3/4 mx-auto"
         style={{ maxWidth: "850px" }}
       >
         {loading && !error && (

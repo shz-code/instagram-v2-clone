@@ -1,8 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthProvider";
+import useUserProfile from "../hooks/useUserProfile";
+import updateFollower from "../services/updateFollower";
+import updateFollowing from "../services/updateFollowing";
 
-export default function ProfileSummary({ userProfile, userPostsCount }) {
-  const { username, fullName, profilePhotoUrl, followers, following, bio } =
-    userProfile;
+export default function ProfileSummary({
+  userProfile: visitingUserProfile,
+  userPostsCount,
+}) {
+  const { user } = useAuth();
+  const { userProfile } = useUserProfile(user.uid);
+
+  const [followUser, setFollowUser] = useState(false);
+
+  const {
+    username,
+    userId,
+    fullName,
+    profilePhotoUrl,
+    followers,
+    following,
+    bio,
+    docId,
+  } = visitingUserProfile;
+
+  useEffect(() => {
+    if (user.uid !== userId && followers.includes(user.uid)) {
+      setFollowUser(true);
+    }
+  }, []);
+
+  const handleFollow = async (e) => {
+    e.preventDefault();
+    try {
+      if (followUser) {
+        setFollowUser(false);
+        await updateFollower(docId, user.uid, false);
+        await updateFollowing(userProfile.docId, userId, false);
+      } else {
+        setFollowUser(true);
+        await updateFollower(docId, userProfile.userId, true);
+        await updateFollowing(userProfile.docId, userId, true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="block md:grid grid-cols-[30%_70%] gap-10 mt-8 border-b border-gray-primary pb-10 mx-auto">
       <div className="profile__photo flex justify-center items-center">
@@ -15,9 +59,18 @@ export default function ProfileSummary({ userProfile, userPostsCount }) {
       <div className="user__details grid gap-y-5 justify-center md:justify-start">
         <div className="row flex justify-center md:justify-start items-center gap-x-4 mt-4">
           <span className=" text-2xl">{username}</span>
-          <span className="border border-gray-primary px-2 py-1 rounded">
-            Edit Profile
-          </span>
+          {user.uid === userId ? (
+            <span className="border border-gray-primary px-2 py-1 rounded cursor-pointer">
+              Edit Profile
+            </span>
+          ) : (
+            <span
+              className="bg-blue-medium text-white px-2 py-1 rounded cursor-pointer"
+              onClick={handleFollow}
+            >
+              {followUser ? "Following" : "Follow"}
+            </span>
+          )}
         </div>
         <div className="row flex items-center justify-center md:justify-start gap-x-4 py-4">
           <div>

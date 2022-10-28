@@ -39,7 +39,7 @@ export default function useSuggestedProfile(uid) {
     fetchData();
 
     return fetchData;
-  }, []);
+  }, [uid]);
   return {
     suggestedProfiles,
     loading,

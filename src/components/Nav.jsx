@@ -9,11 +9,13 @@ export default function Nav({ currentPage }) {
   const [show, setShow] = useState(false);
   const { user, logout } = useAuth();
   const { userProfile, loading } = useUserProfile(user?.uid);
+
   const navigate = useNavigate();
+
   return (
     <div className="bg-white py-2 border border-b-1 border-gray-primary">
       <nav
-        className="container w-full px-1 md:w-3/4 mx-auto flex justify-between"
+        className="container w-full px-1 lg:w-3/4 mx-auto flex justify-between"
         style={{ maxWidth: "900px" }}
       >
         <Link to="/" className="logo font-bold text-2xl">
@@ -86,7 +88,7 @@ export default function Nav({ currentPage }) {
             />
           </span>
           {show && (
-            <div className="nav__user__modal absolute -right-10 -bottom-20 bg-white py-5rounded">
+            <div className="nav__user__modal absolute -right-10 -bottom-20 z-10 bg-white py-5rounded">
               <div className="w-full px-5 cursor-pointer">
                 <Link
                   to={`p/${user?.uid}`}
