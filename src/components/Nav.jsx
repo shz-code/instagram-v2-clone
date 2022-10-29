@@ -1,22 +1,47 @@
 import "boxicons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
+import useNotifications from "../hooks/useNotifications";
 import useUserProfile from "../hooks/useUserProfile";
 import { HOME, UPLOAD } from "../Routes";
+import updateUserNotiCount from "../services/updateUserNotiCount";
 import UserNotifications from "./UserNotifications";
 
 export default function Nav({ currentPage }) {
   const [show, setShow] = useState(false);
   const [showNotis, setshowNotis] = useState(false);
+  const [newNoti, setNewNoti] = useState(false);
+  const [notiCount, setNotiCount] = useState(0);
 
   const { user, logout } = useAuth();
   const { userProfile, loading } = useUserProfile(user?.uid);
+  const { userNotis, notiLoading } = useNotifications(user?.uid);
+
+  const { notificationRead, docId, profilePhotoUrl } = userProfile;
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (notificationRead < userNotis?.length) {
+      setNewNoti(true);
+      setNotiCount(userNotis.length - notificationRead);
+    }
+  }, [notificationRead, userNotis.length]);
+
+  const handleNotiCountUpdate = async () => {
+    setshowNotis((e) => !e);
+    if (show) setShow(false);
+    let count = notificationRead + (userNotis.length - notificationRead);
+    try {
+      await updateUserNotiCount(docId, user.uid, count);
+    } catch (err) {
+      console.log(err);
+    }
+    setNewNoti(false);
+  };
   return (
-    <div className="bg-white py-2 border border-b-1 border-gray-primary">
+    <div className="bg-white py-2 border border-b-1 border-gray-primary px-2 lg:px-0">
       <nav
         className="container w-full px-1 lg:w-3/4 mx-auto flex justify-between"
         style={{ maxWidth: "900px" }}
@@ -80,23 +105,76 @@ export default function Nav({ currentPage }) {
               </svg>
             )}
           </Link>
-          <Link className="relative top-1 cursor-pointer">
-            <box-icon name="bell" size="sm" s></box-icon>
-          </Link>
-          <span className="cursor-pointer" onClick={() => setShow((e) => !e)}>
+          <span
+            className="relative cursor-pointer"
+            onClick={handleNotiCountUpdate}
+          >
+            {showNotis ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                  />
+                </svg>
+                {newNoti && (
+                  <span className="absolute -top-2 -right-2 text-sm bg-red-primary text-white rounded-full px-2">
+                    {notiCount}
+                  </span>
+                )}
+              </>
+            )}
+          </span>
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              setShow((e) => !e);
+              if (showNotis) setshowNotis(false);
+            }}
+          >
             <img
-              src={userProfile?.profilePhotoUrl}
+              src={
+                profilePhotoUrl
+                  ? profilePhotoUrl
+                  : "./images/avaters/default.png"
+              }
               className="w-7 rounded-full"
-              alt=""
+              alt={`${user?.displayName}'s Profile Picture.`}
             />
           </span>
-          {showNotis && <UserNotifications />}
+          {showNotis && (
+            <UserNotifications
+              userNotis={userNotis}
+              notiLoading={notiLoading}
+            />
+          )}
           {show && (
-            <div className="nav__user__modal absolute -right-10 -bottom-20 z-10 bg-white py-5rounded">
-              <div className="w-full px-5 cursor-pointer">
+            <div className="nav__user__modal absolute right-1 -bottom-20 z-10 bg-white py-1 rounded border border-gray-primary">
+              <div className="cursor-pointer">
                 <Link
                   to={`p/${user?.uid}`}
-                  className="text-gray-base bg-gray-primary w-full inline-block"
+                  className=" w-full inline-block text-center hover:bg-gray-background px-2"
                 >
                   Profile
                 </Link>
@@ -104,7 +182,7 @@ export default function Nav({ currentPage }) {
                   onClick={() => {
                     logout();
                   }}
-                  className="text-gray-base bg-gray-primary mt-2  w-full inline-block"
+                  className=" mt-2 w-full inline-block text-center hover:bg-gray-background px-2"
                 >
                   Logout
                 </div>

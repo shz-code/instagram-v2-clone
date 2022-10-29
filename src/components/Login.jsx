@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import InstagramLogo from "../assets/images/logo.png";
 import { useAuth } from "../contexts/AuthProvider";
 import Loader from "./Loader";
 
@@ -34,9 +33,7 @@ export default function Login({ setCurrentAuth }) {
   return (
     <>
       <div className="bg-white flex-col flex items-center p-5 rounded border border-gray-primary">
-        <h1>
-          <img src={InstagramLogo} alt="Logo" />
-        </h1>
+        <span className="logo font-bold text-4xl">Instagram</span>
         {error && (
           <span className="text-sm font-bold bg-gray-background w-full text-center py-1 rounded text-red-primary mt-2">
             {error}

@@ -64,7 +64,8 @@ export default function Post({ post, userProfile }) {
         userProfile.username,
         userProfile.profilePhotoUrl,
         "like",
-        postUserId
+        postUserId,
+        postId
       );
       setLikedCount((e) => e + 1);
       postRef.current.style.display = "flex";
@@ -100,7 +101,8 @@ export default function Post({ post, userProfile }) {
           userProfile.username,
           userProfile.profilePhotoUrl,
           "comment",
-          postUserId
+          postUserId,
+          postId
         );
         setModComments((prev) => {
           return [...prev, ...newArr];
@@ -140,7 +142,7 @@ export default function Post({ post, userProfile }) {
         className={`grid justify-center ${style.content__box} w-full`}
         onClick={handleClickEvent}
       >
-        <div className="content mx-auto bg-white rounded border border-gray-primary w-3/4 md:2/4 xl:w-full">
+        <div className="content mx-auto bg-white rounded border border-gray-primary w-full md:2/4 xl:w-full">
           <div className="content__header p-3">
             <div className="user_avater flex gap-x-2 items-center">
               <img src={profilePhotoUrl} className="w-8 rounded-2xl" alt="" />
@@ -300,7 +302,7 @@ export default function Post({ post, userProfile }) {
         </div>
       </div>
       {showCommentSubmitAlert && (
-        <div className="comment__submit__alert fixed top-10 left-1/3 z-10">
+        <div className="comment__submit__alert fixed :top-14 left-7 sm:left-1/3 z-10">
           <span className="font-bold py-1 px-5 bg-gray-background shadow-md rounded">
             Comment Submitted Sucessfully.
           </span>

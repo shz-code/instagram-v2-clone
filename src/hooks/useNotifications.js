@@ -1,25 +1,37 @@
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function useNotifications(uid) {
   const [userNotis, setUserNotis] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [notiLoading, setNotiLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const db = getFirestore();
       const userNotiRef = collection(db, `noti:${uid}`);
-      const userNotiQuery = query(userNotiRef);
+      const userNotiQuery = query(
+        userNotiRef,
+        orderBy("dateCreated", "desc"),
+        limit(10)
+      );
       try {
         const snapshot = await getDocs(userNotiQuery);
+        setUserNotis([]);
         snapshot.forEach((doc) => {
           setUserNotis((prev) => {
             return [...prev, doc.data()];
           });
-          setLoading(false);
         });
+        setNotiLoading(false);
       } catch (err) {
         console.log(err);
-        setLoading(false);
+        setNotiLoading(false);
       }
     };
     fetchData();
@@ -28,6 +40,6 @@ export default function useNotifications(uid) {
   }, [uid]);
   return {
     userNotis,
-    loading,
+    notiLoading,
   };
 }

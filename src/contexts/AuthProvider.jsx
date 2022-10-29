@@ -45,6 +45,7 @@ export default function AuthProvider({ children }) {
         following: [],
         followers: [],
         dateCreated: Date.now(),
+        notificationRead: 0,
       });
     } catch (err) {
       console.log("There was an error creating user profile.");

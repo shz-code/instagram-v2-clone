@@ -18,7 +18,7 @@ function UploadPostDetails({
     setCaption((e) => e + emoObj.emoji);
   };
   return (
-    <div className="post__details p-4">
+    <div className="post__details p-4 border-t border-gray-primary lg:border-none">
       {loading ? (
         <Skeleton count={1} height={40} />
       ) : (
@@ -65,7 +65,7 @@ function UploadPostDetails({
         </div>
         <div className="char__count">{caption.length}/2,200</div>
         {emoji && (
-          <div className="absolute top-10 -left-4">
+          <div className="absolute top-10 -left-4 z-30">
             <EmojiPicker lazyLoadEmojis="true" onEmojiClick={onEmojiClick} />
           </div>
         )}

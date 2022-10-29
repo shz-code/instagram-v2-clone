@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer";
 import ProfileSummary from "../components/ProfileSummary";
 import UserPosts from "../components/UserPosts";
 import useUserPosts from "../hooks/useUserPosts";
@@ -43,6 +44,7 @@ export default function Profile({ setCurrentPage }) {
         )}
         {!loading && !error && <UserPosts userPosts={userPosts} />}
       </div>
+      <Footer justifyCenter="justify-center" textCenter="text-center" />
     </div>
   );
 }

@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { useEffect, useState } from "react";
 
-export default function useUserProfile(uid) {
+export default function useUserProfile(uid = 0) {
   const [userProfile, setUserProfile] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -24,9 +24,9 @@ export default function useUserProfile(uid) {
           const newObj = _.cloneDeep(doc.data());
           newObj.docId = doc.id;
           setUserProfile({ ...newObj });
-          setLoading(false);
-          setError(false);
         });
+        setLoading(false);
+        setError(false);
       } catch (err) {
         console.log(err);
         setLoading(false);

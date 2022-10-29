@@ -5,7 +5,8 @@ const updateNotification = async (
   senderName,
   senderPhotoUrl,
   type,
-  receiverId
+  receiverId,
+  postId
 ) => {
   const db = getFirestore();
   const recriverNotiRef = collection(db, `noti:${receiverId.toString()}`);
@@ -13,6 +14,7 @@ const updateNotification = async (
     await addDoc(recriverNotiRef, {
       userId: receiverId,
       type: type,
+      postId: postId ? postId : "none",
       sender: {
         userId: senderId,
         username: senderName,

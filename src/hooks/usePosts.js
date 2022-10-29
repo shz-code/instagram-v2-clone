@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 export default function usePosts(userProfile) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const db = getFirestore();

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import UploadPostDetails from "../components/UploadPostDetails";
 import UploadPostImage from "../components/UploadPostImage";
@@ -134,6 +135,7 @@ export default function Upload({ setCurrentPage }) {
           </div>
         )}
       </form>
+      <Footer justifyCenter="justify-center" textCenter="text-center" />
     </div>
   );
 }
